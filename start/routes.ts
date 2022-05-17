@@ -11,15 +11,26 @@
 | ├── start/routes/cart.ts
 | ├── start/routes/customer.ts
 |
-| and then import them inside `start/routes.ts` as follows
+| and then import them inside `start/routes/index.ts` as follows
 |
-| import './routes/cart'
-| import './routes/customer''
+| import './cart'
+| import './customer'
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+import Route from "@ioc:Adonis/Core/Route";
 
-Route.get('/', async ({ view }) => {
-  return view.render('welcome')
-})
+Route.on("/").render("welcome");
+
+Route.on("register").render("register");
+Route.post("register", "AuthController.register");
+
+Route.group(() => {
+  Route.get("/dashboard", "TodosController.index").as("dashboard");
+  Route.get("/todos/user", "TodosController.byUserId");
+  Route.resource("todos", "TodosController");
+}).middleware("auth");
+
+Route.on("login").render("login");
+Route.post("/login", "AuthController.login");
+Route.post("/logout", "AuthController.login").as("logout");

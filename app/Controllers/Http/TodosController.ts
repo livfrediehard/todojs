@@ -40,7 +40,7 @@ export default class TodosController {
 
     public async update({view, auth, request, params}: HttpContextContract)
     {
-        const todo = await Todo.find(params.id);
+        const todo = await Todo.findOrFail(params.id);
 
         if (todo) {
             todo.title = request.input('title');

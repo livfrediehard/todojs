@@ -21,7 +21,6 @@
 import Route from "@ioc:Adonis/Core/Route";
 
 Route.on("/").render("welcome");
-
 Route.on("register").render("register");
 Route.post("register", "AuthController.register");
 
@@ -33,4 +32,4 @@ Route.group(() => {
 
 Route.on("login").render("login");
 Route.post("/login", "AuthController.login");
-Route.post("/logout", "AuthController.login").as("logout");
+Route.post("/logout", "AuthController.logout").as("logout");
